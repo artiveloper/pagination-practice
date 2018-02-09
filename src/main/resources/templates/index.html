@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Header -->
+<head th:replace="fragments/header :: header('INDEX')"/>
+
+<body>
+
+    <!--<a href="/posts">게시판 가기</a>-->
+    <script>
+        var offset = location.href.indexOf(location.host) + location.host.length;
+        var ctxPath = location.href.substring(offset, location.href.indexOf('/', offset + 1));
+        location.href = ctxPath + "/posts"
+    </script>
+
+    <!-- Script -->
+    <div th:replace="fragments/script :: script"/>
+</body>
+</html>

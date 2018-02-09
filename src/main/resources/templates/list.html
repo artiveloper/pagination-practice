@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<!-- Header -->
+<head th:replace="fragments/header :: header('POST LIST')"/>
+
+<body>
+
+<div class="container">
+    <h2 class="mt-5">게시판</h2>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <th scope="row" th:text="${post.postno}">게시글 번호</th>
+            <td><a th:href="@{'/posts/' + ${post.postno}}" th:text="${post.subject}">제목</a></td>
+            <td th:text="${post.writer}">작성자</td>
+            <td th:text="${post.regdate}">작성시간</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${pagination.prev} != false">
+                <a class="page-link" th:href="@{/posts(page=${pagination.startPage - 1})}">이전</a>
+            </li>
+
+            <li th:class="${pagination.criteria.currentPage} != ${page} ? 'page-item' : 'page-item active'"
+                th:each="page : ${#numbers.sequence(pagination.startPage, pagination.lastPage)}">
+                <a class="page-link" th:href="@{/posts(page=${page})}" th:text="${page}"></a>
+            </li>
+
+            <li class="page-item" th:if="${pagination.next} != false">
+                <a class="page-link" th:href="@{/posts(page=${pagination.lastPage + 1})}">다음</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Script -->
+<div th:replace="fragments/script :: script"/>
+</body>
+</html>
